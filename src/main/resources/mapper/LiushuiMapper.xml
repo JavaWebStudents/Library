@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zime.maven.dao.LiushuiMapper">
+  <resultMap id="BaseResultMap" type="com.zime.maven.entity.Liushui">
+    <id column="l_id" jdbcType="INTEGER" property="lId" />
+    <result column="l_isbn" jdbcType="VARCHAR" property="lIsbn" />
+    <result column="l_username" jdbcType="VARCHAR" property="lUsername" />
+    <result column="l_handle" jdbcType="VARCHAR" property="lHandle" />
+    <result column="l_datetime" jdbcType="TIMESTAMP" property="lDatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    l_id, l_isbn, l_username, l_handle, l_datetime
+  </sql>
+  <select id="selectByExample" parameterType="com.zime.maven.entity.LiushuiExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book_liushui
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_liushui
+    where l_id = #{lId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_liushui
+    where l_id = #{lId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zime.maven.entity.LiushuiExample">
+    delete from book_liushui
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zime.maven.entity.Liushui">
+    insert into book_liushui (l_id, l_isbn, l_username, 
+      l_handle, l_datetime)
+    values (#{lId,jdbcType=INTEGER}, #{lIsbn,jdbcType=VARCHAR}, #{lUsername,jdbcType=VARCHAR}, 
+      #{lHandle,jdbcType=VARCHAR}, #{lDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zime.maven.entity.Liushui">
+    insert into book_liushui
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        l_id,
+      </if>
+      <if test="lIsbn != null">
+        l_isbn,
+      </if>
+      <if test="lUsername != null">
+        l_username,
+      </if>
+      <if test="lHandle != null">
+        l_handle,
+      </if>
+      <if test="lDatetime != null">
+        l_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        #{lId,jdbcType=INTEGER},
+      </if>
+      <if test="lIsbn != null">
+        #{lIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="lUsername != null">
+        #{lUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="lHandle != null">
+        #{lHandle,jdbcType=VARCHAR},
+      </if>
+      <if test="lDatetime != null">
+        #{lDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zime.maven.entity.LiushuiExample" resultType="java.lang.Long">
+    select count(*) from book_liushui
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update book_liushui
+    <set>
+      <if test="record.lId != null">
+        l_id = #{record.lId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lIsbn != null">
+        l_isbn = #{record.lIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lUsername != null">
+        l_username = #{record.lUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lHandle != null">
+        l_handle = #{record.lHandle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lDatetime != null">
+        l_datetime = #{record.lDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update book_liushui
+    set l_id = #{record.lId,jdbcType=INTEGER},
+      l_isbn = #{record.lIsbn,jdbcType=VARCHAR},
+      l_username = #{record.lUsername,jdbcType=VARCHAR},
+      l_handle = #{record.lHandle,jdbcType=VARCHAR},
+      l_datetime = #{record.lDatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zime.maven.entity.Liushui">
+    update book_liushui
+    <set>
+      <if test="lIsbn != null">
+        l_isbn = #{lIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="lUsername != null">
+        l_username = #{lUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="lHandle != null">
+        l_handle = #{lHandle,jdbcType=VARCHAR},
+      </if>
+      <if test="lDatetime != null">
+        l_datetime = #{lDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zime.maven.entity.Liushui">
+    update book_liushui
+    set l_isbn = #{lIsbn,jdbcType=VARCHAR},
+      l_username = #{lUsername,jdbcType=VARCHAR},
+      l_handle = #{lHandle,jdbcType=VARCHAR},
+      l_datetime = #{lDatetime,jdbcType=TIMESTAMP}
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+</mapper>

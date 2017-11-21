@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zime.maven.dao.BorrowMapper">
+  <resultMap id="BaseResultMap" type="com.zime.maven.entity.Borrow">
+    <id column="bw_id" jdbcType="INTEGER" property="bwId" />
+    <result column="bw_isbn" jdbcType="VARCHAR" property="bwIsbn" />
+    <result column="bw_username" jdbcType="VARCHAR" property="bwUsername" />
+    <result column="bw_outtime" jdbcType="DATE" property="bwOuttime" />
+    <result column="bw_endtime" jdbcType="DATE" property="bwEndtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    bw_id, bw_isbn, bw_username, bw_outtime, bw_endtime
+  </sql>
+  <select id="selectByExample" parameterType="com.zime.maven.entity.BorrowExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book_borrow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_borrow
+    where bw_id = #{bwId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_borrow
+    where bw_id = #{bwId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zime.maven.entity.BorrowExample">
+    delete from book_borrow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zime.maven.entity.Borrow">
+    insert into book_borrow (bw_id, bw_isbn, bw_username, 
+      bw_outtime, bw_endtime)
+    values (#{bwId,jdbcType=INTEGER}, #{bwIsbn,jdbcType=VARCHAR}, #{bwUsername,jdbcType=VARCHAR}, 
+      #{bwOuttime,jdbcType=DATE}, #{bwEndtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zime.maven.entity.Borrow">
+    insert into book_borrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bwId != null">
+        bw_id,
+      </if>
+      <if test="bwIsbn != null">
+        bw_isbn,
+      </if>
+      <if test="bwUsername != null">
+        bw_username,
+      </if>
+      <if test="bwOuttime != null">
+        bw_outtime,
+      </if>
+      <if test="bwEndtime != null">
+        bw_endtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bwId != null">
+        #{bwId,jdbcType=INTEGER},
+      </if>
+      <if test="bwIsbn != null">
+        #{bwIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="bwUsername != null">
+        #{bwUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="bwOuttime != null">
+        #{bwOuttime,jdbcType=DATE},
+      </if>
+      <if test="bwEndtime != null">
+        #{bwEndtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zime.maven.entity.BorrowExample" resultType="java.lang.Long">
+    select count(*) from book_borrow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update book_borrow
+    <set>
+      <if test="record.bwId != null">
+        bw_id = #{record.bwId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bwIsbn != null">
+        bw_isbn = #{record.bwIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bwUsername != null">
+        bw_username = #{record.bwUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bwOuttime != null">
+        bw_outtime = #{record.bwOuttime,jdbcType=DATE},
+      </if>
+      <if test="record.bwEndtime != null">
+        bw_endtime = #{record.bwEndtime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update book_borrow
+    set bw_id = #{record.bwId,jdbcType=INTEGER},
+      bw_isbn = #{record.bwIsbn,jdbcType=VARCHAR},
+      bw_username = #{record.bwUsername,jdbcType=VARCHAR},
+      bw_outtime = #{record.bwOuttime,jdbcType=DATE},
+      bw_endtime = #{record.bwEndtime,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zime.maven.entity.Borrow">
+    update book_borrow
+    <set>
+      <if test="bwIsbn != null">
+        bw_isbn = #{bwIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="bwUsername != null">
+        bw_username = #{bwUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="bwOuttime != null">
+        bw_outtime = #{bwOuttime,jdbcType=DATE},
+      </if>
+      <if test="bwEndtime != null">
+        bw_endtime = #{bwEndtime,jdbcType=DATE},
+      </if>
+    </set>
+    where bw_id = #{bwId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zime.maven.entity.Borrow">
+    update book_borrow
+    set bw_isbn = #{bwIsbn,jdbcType=VARCHAR},
+      bw_username = #{bwUsername,jdbcType=VARCHAR},
+      bw_outtime = #{bwOuttime,jdbcType=DATE},
+      bw_endtime = #{bwEndtime,jdbcType=DATE}
+    where bw_id = #{bwId,jdbcType=INTEGER}
+  </update>
+</mapper>
